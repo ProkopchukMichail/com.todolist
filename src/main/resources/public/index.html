@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html ng-app="ToDoListApp">
+<head>
+    <title>TODO</title>
+    <script src="angular.js"></script>
+    <script src="angular-resource.js"></script>
+    <script src="angularToDo.js"></script>
+    <link href="freelancer.css" rel="stylesheet"/>
+</head>
+
+<body ng-controller="Controller" >
+
+<div class="container" align="center">
+    &#160;
+    <form role='login'>
+        <div class='form-inline'>
+            <label >Login</label>
+            <input class="form-control" ng-model='login' type='text'>
+            <button class="btn btn-primary"  ng-click="update()" >Show</button>
+            <select class="form-control" ng-init="word = 'all'"  name="mySelector" ng-model="word" >
+                <option value="all" >All</option>
+                <option selected value="done" >Complete</option>
+                <option value="act" >Active</option>
+            </select>
+        </div>
+    </form>
+    &#160;
+<form role='form'>
+    <div class='form-group' align="center">
+        <label>What to do?</label>
+        <input class='form-control' ng-model='text' type='text'>
+    </div>
+    &#160;
+    <div class="form-todo" align="center">
+        <button class="btn btn-primary" ng-click="add()">TODO</button>
+    </div>
+</form>
+    &#160;
+<div class="container">
+    <div class="alert-danger" align="center" ng-hide='controller.length'>ToDo List</div>
+    <table class="table table-responsive">
+    <tbody ng-repeat='todo in todos | filter:word'>
+        <tr ng-if='todo != activeTodo' ng-class="todo.closed ? 'success' : 'active'">
+            <td>
+                <span class="label label-success" ng-if='todo.closed'>Complete</span>
+                <span class="label label-info" ng-if='!todo.closed'>Open</span>
+                <span></span>
+            </td>
+            <td>{{ todo.text }}</td>
+            <td class="col-md-5" align="right">
+                <a class='btn btn-success' href='' ng-click='switch(todo)'> Swap </a>
+                <a class='btn btn-primary' href='' ng-click='edit(todo)'> Change </a>
+                <a class='btn btn-danger' href='' ng-click='delete(todo)'> Remove </a>
+            </td>
+        </tr>
+        <tr ng-if='todo == activeTodo'>
+            <td>
+                <span class="label label-success" ng-if='todo.closed'>Done</span>
+                <span class="label label-info" ng-if='!todo.closed'>Open</span>
+                <span></span>
+            </td>
+            <td><input class="form-control" ng-model='todo.text' type="text"></td>
+            <td><a class='btn btn-primary' href='' ng-click='confirm(todo)'> Save changes </a></td>
+        </tr>
+    </tbody>
+</table>
+</div>
+</div>
+</body>
+</html>
